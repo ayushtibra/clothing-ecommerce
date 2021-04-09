@@ -12,6 +12,37 @@ const config = {
   measurementId: 'G-VPF7KLP1L3',
 };
 
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  console.log('firebase', userAuth);
+  console.log('firebase', additionalData);
+
+  if (!userAuth) return;
+
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  console.log('firebase', userRef);
+
+  const snapshot = await userRef.get();
+  console.log('firebase', snapshot);
+
+  if (!snapshot.exists) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return userRef;
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
