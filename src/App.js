@@ -10,6 +10,7 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.com
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.actions';
+import Test from './pages/test/test';
 class App extends React.Component {
   // state = {
   //   currentUser: null,
@@ -64,6 +65,7 @@ class App extends React.Component {
               this.props.currentUser ? <Redirect to='/' /> : <SignInAndSignUp />
             }
           />
+          <Route exact path='/test' component={Test} />
         </Switch>
       </div>
     );
